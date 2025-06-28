@@ -1,5 +1,6 @@
 import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { useCreateCard } from "@/hooks/useCard";
 import * as ImagePicker from "expo-image-picker";
 import React from "react";
 import { useFormContext } from "react-hook-form";
@@ -11,12 +12,11 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
-
 import { CardFormData } from "./useCardForm";
 
 export default function CardFormScreen() {
   const [image, setImage] = React.useState<string | null>(null);
-
+  console.log(useCreateCard);
   const {
     setValue,
     formState: { errors },
@@ -31,13 +31,13 @@ export default function CardFormScreen() {
 
     const result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      quality: 0.7,
+      quality: 0.5,
     });
 
     if (!result.canceled) {
       const uri = result.assets[0].uri;
       setImage(uri);
-      setValue("image_url", uri);
+      setValue("imageUrl", uri);
     }
   };
 

@@ -7,8 +7,8 @@ import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
+import { AuthProvider } from "@/contexts/AuthContext";
 import { useColorScheme } from "@/hooks/useColorScheme";
-import { AuthProvider } from "./contexts/AuthContext";
 
 export default function NavigationLayout() {
   const colorScheme = useColorScheme();

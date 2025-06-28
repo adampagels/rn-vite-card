@@ -9,7 +9,7 @@ export const cardSchema = z.object({
   phone: z.string().optional(),
   company: z.string().optional(),
   website: z.string().url("Invalid URL").optional(),
-  image_url: z.string().url("Must be a valid image URL").optional(),
+  imageUrl: z.string().url("Must be a valid image URL").optional(),
 });
 
 export type CardFormData = z.infer<typeof cardSchema>;

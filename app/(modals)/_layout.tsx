@@ -1,19 +1,30 @@
 import { Button } from "@/components/common/Button";
+import { useAuth } from "@/contexts/AuthContext";
+import { useUploadImage } from "@/hooks/useCard";
 import { router, Stack } from "expo-router";
 import { FormProvider } from "react-hook-form";
 import useCardForm from "./useCardForm";
 
 export default function ModalLayout() {
   const form = useCardForm();
+  const { user } = useAuth();
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = form;
+  const { mutate, mutateAsync, isPending, isError, error, data } =
+    useUploadImage();
 
-  const onSubmit = handleSubmit(async (data) => {
-    console.log("Form data submitted:", data);
-    // TODO: Update with actual service call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+  const onSubmit = handleSubmit(async (formData) => {
+    console.log("Form data submitted:", formData);
+    try {
+      await mutateAsync({
+        localImagePath: formData.imageUrl ?? "",
+        userId: user?.id ?? "",
+      });
+    } catch (error) {
+      console.error("Upload failed:", error);
+    }
 
     router.back();
   });
