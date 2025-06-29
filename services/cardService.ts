@@ -6,7 +6,7 @@ export const CardService = (supabase: SupabaseClient) => ({
   async createCard(card: Card): Promise<Card> {
     const { data, error } = await supabase
       .from("cards")
-      .insert([convertToSnakeCase(card)])
+      .insert([card])
       .select()
       .single();
 
@@ -21,8 +21,6 @@ export const CardService = (supabase: SupabaseClient) => ({
     const blob = await response.blob();
     const arrayBuffer = await new Response(blob).arrayBuffer();
 
-    console.log(blob);
-
     const blobId = (blob as ReactNativeBlob)._data?.blobId;
     const fileName = `${userId}/${blobId}.jpg`;
 
@@ -36,7 +34,23 @@ export const CardService = (supabase: SupabaseClient) => ({
     if (error) throw error;
     if (!data) throw new Error("Failed to upload image");
 
-    return data;
+    return data.path;
+  },
+
+  async createCardWithImage(
+    card: Card,
+    localImagePath: string,
+    userId: string
+  ): Promise<Card> {
+    const imageUrl = await this.uploadImage(localImagePath, userId);
+
+    const cardWithImage = {
+      ...card,
+      userId,
+      imageUrl,
+    };
+
+    return await this.createCard(convertToSnakeCase(cardWithImage) as Card);
   },
 });
 

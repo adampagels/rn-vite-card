@@ -1,29 +1,20 @@
 import { CardService } from "@/services/cardService";
 import { supabase } from "@/services/supabase";
 import type { Card } from "@/types/card";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 const cardService = CardService(supabase);
 
-export const useCreateCard = () => {
-  const queryClient = useQueryClient();
-
-  return useMutation({
-    mutationFn: (card: Card) => cardService.createCard(card),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cards"] });
-    },
-  });
-};
-
-export const useUploadImage = () => {
+export const useUploadCardWithImage = () => {
   return useMutation({
     mutationFn: ({
+      card,
       localImagePath,
       userId,
     }: {
+      card: Card;
       localImagePath: string;
       userId: string;
-    }) => cardService.uploadImage(localImagePath, userId),
+    }) => cardService.createCardWithImage(card, localImagePath, userId),
   });
 };

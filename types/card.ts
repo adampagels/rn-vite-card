@@ -1,8 +1,8 @@
 export type Card = {
   firstName: string;
   lastName: string;
-  id: string;
-  user_id: string;
+  id?: string;
+  userId?: string;
   name?: string;
   company?: string;
   phone?: string;
@@ -11,6 +11,6 @@ export type Card = {
   imageUrl?: string;
   socialLinks?: { platform: string; url: string }[];
   qrContent?: string;
-  created_at?: Date;
-  updated_at?: Date;
+  createdAt?: Date;
+  updatedAt?: Date;
 };

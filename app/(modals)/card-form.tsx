@@ -1,6 +1,5 @@
 import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import { useCreateCard } from "@/hooks/useCard";
 import * as ImagePicker from "expo-image-picker";
 import React from "react";
 import { useFormContext } from "react-hook-form";
@@ -16,7 +15,6 @@ import { CardFormData } from "./useCardForm";
 
 export default function CardFormScreen() {
   const [image, setImage] = React.useState<string | null>(null);
-  console.log(useCreateCard);
   const {
     setValue,
     formState: { errors },
@@ -53,16 +51,11 @@ export default function CardFormScreen() {
 
       {renderField(
         "First Name",
-        "first_name",
-        errors.first_name?.message,
+        "firstName",
+        errors.firstName?.message,
         setValue
       )}
-      {renderField(
-        "Last Name",
-        "last_name",
-        errors.last_name?.message,
-        setValue
-      )}
+      {renderField("Last Name", "lastName", errors.lastName?.message, setValue)}
       {renderField(
         "Email",
         "email",
