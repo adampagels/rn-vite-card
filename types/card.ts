@@ -7,6 +7,7 @@ export type Card = {
   company?: string;
   phone?: string;
   email?: string;
+  role?: string;
   website?: string;
   imageUrl?: string;
   socialLinks?: { platform: string; url: string }[];

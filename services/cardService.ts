@@ -1,4 +1,5 @@
 import { Card } from "@/types/card";
+import { convertToCamelCase } from "@/utils/helpers/convertToCamelCase";
 import { convertToSnakeCase } from "@/utils/helpers/convertToSnakeCase";
 import { SupabaseClient } from "@supabase/supabase-js";
 
@@ -51,6 +52,17 @@ export const CardService = (supabase: SupabaseClient) => ({
     };
 
     return await this.createCard(convertToSnakeCase(cardWithImage) as Card);
+  },
+
+  async fetchCardsByUser(userId: string) {
+    const { data, error } = await supabase
+      .from("cards")
+      .select("*")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
+
+    if (error) throw error;
+    return convertToCamelCase(data) as Card[];
   },
 });
 
