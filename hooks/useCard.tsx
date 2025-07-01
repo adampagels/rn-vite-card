@@ -25,3 +25,10 @@ export const useFetchCards = (userId: string) =>
     queryFn: () => cardService.fetchCardsByUser(userId),
     enabled: Boolean(userId),
   });
+
+export const useFetchContacts = (userId: string) =>
+  useQuery({
+    queryKey: ["contacts", userId],
+    queryFn: () => cardService.fetchContactsByUser(userId),
+    enabled: Boolean(userId),
+  });

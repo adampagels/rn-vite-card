@@ -6,7 +6,7 @@ type VStackProps = ViewProps & {
   children: React.ReactNode;
 };
 
-export const VStack = ({
+export const HStack = ({
   spacing = 0,
   children,
   style,

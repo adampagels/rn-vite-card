@@ -1,4 +1,5 @@
 import { Card } from "@/types/card";
+import { ContactWithCard } from "@/types/contactWithCard";
 import { convertToCamelCase } from "@/utils/helpers/convertToCamelCase";
 import { convertToSnakeCase } from "@/utils/helpers/convertToSnakeCase";
 import { SupabaseClient } from "@supabase/supabase-js";
@@ -63,6 +64,40 @@ export const CardService = (supabase: SupabaseClient) => ({
 
     if (error) throw error;
     return convertToCamelCase(data) as Card[];
+  },
+
+  async fetchContactsByUser(userId: string) {
+    const { data, error } = await supabase
+      .from("contacts")
+      .select(
+        `
+      id,
+      user_id,
+      scanned_at,
+      cards (
+        id,
+        name,
+        company,
+        phone,
+        email,
+        website,
+        image_url,
+        social_links,
+        qr_content,
+        first_name,
+        last_name,
+        role,
+        created_at,
+        updated_at
+      )
+    `
+      )
+      .eq("user_id", userId)
+      .order("scanned_at", { ascending: true });
+
+    if (error) throw error;
+
+    return convertToCamelCase(data) as ContactWithCard[];
   },
 });
 
