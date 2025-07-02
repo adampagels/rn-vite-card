@@ -6,7 +6,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "../ThemedText";
 import { VStack } from "./VStack";
 
-export const ContactCard = (card: Card) => {
+interface ContactCardProps {
+  card: Card;
+}
+
+export const ContactCard = ({ card }: ContactCardProps) => {
   const {
     firstName,
     lastName,

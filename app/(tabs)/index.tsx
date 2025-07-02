@@ -48,7 +48,7 @@ export default function HomeScreen() {
     <ThemedView style={styles.container}>
       <FlatList
         data={data}
-        renderItem={({ item }) => <ContactCard {...item} />}
+        renderItem={({ item }) => <ContactCard card={item} />}
         keyExtractor={(item, index) => item.id || index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
