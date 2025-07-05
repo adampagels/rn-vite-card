@@ -2,6 +2,7 @@ import { router, Tabs } from "expo-router";
 import React from "react";
 import { Platform, TouchableOpacity } from "react-native";
 
+import { HStack } from "@/components/common/HStack";
 import { HapticTab } from "@/components/HapticTab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
@@ -49,9 +50,18 @@ export default function TabLayout() {
           headerLeft: SettingsButton,
           headerRight: () => {
             return (
-              <TouchableOpacity>
-                <IconSymbol name="ellipsis.circle.fill" color={"blue"} />
-              </TouchableOpacity>
+              <HStack spacing={15}>
+                <TouchableOpacity
+                  onPress={() => router.push("/(modals)/card-form")}
+                >
+                  <IconSymbol name="plus" color={"blue"} />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => router.push("/(modals)/card-form")}
+                >
+                  <IconSymbol name="pencil" color={"blue"} />
+                </TouchableOpacity>
+              </HStack>
             );
           },
         }}
