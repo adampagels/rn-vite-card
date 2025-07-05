@@ -4,7 +4,9 @@ import { router, Stack } from "expo-router";
 import { FormProvider } from "react-hook-form";
 import useCardForm from "./useCardForm";
 
+import { IconSymbol } from "@/components/ui/IconSymbol";
 import { useUploadCardWithImage } from "@/hooks/useCard";
+import { TouchableOpacity } from "react-native";
 
 export default function ModalLayout() {
   const form = useCardForm();
@@ -64,7 +66,9 @@ export default function ModalLayout() {
             title: "Settings",
             presentation: "fullScreenModal",
             headerLeft: () => (
-              <Button title="X" variant="ghost" onPress={() => router.back()} />
+              <TouchableOpacity onPress={() => router.back()}>
+                <IconSymbol name="xmark" color={"blue"} />
+              </TouchableOpacity>
             ),
           }}
         />
