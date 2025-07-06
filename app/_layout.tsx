@@ -1,3 +1,4 @@
+import { HapticsProvider } from "@/contexts/HapticsContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { ActivityIndicator, View } from "react-native";
@@ -19,7 +20,6 @@ export default function RootLayout() {
   });
 
   if (!loaded) {
-    // Async font loading only occurs in development.
     return null;
   }
 
@@ -33,7 +33,9 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <NavigationLayout />
+      <HapticsProvider>
+        <NavigationLayout />
+      </HapticsProvider>
     </QueryClientProvider>
   );
 }

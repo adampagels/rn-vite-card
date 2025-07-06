@@ -3,7 +3,7 @@ import React from "react";
 import { Platform, TouchableOpacity } from "react-native";
 
 import { HStack } from "@/components/common/HStack";
-import { HapticTab } from "@/components/HapticTab";
+import { Tab } from "@/components/Tab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
@@ -25,7 +25,7 @@ export default function TabLayout() {
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
         headerShown: true,
-        tabBarButton: HapticTab,
+        tabBarButton: Tab,
         tabBarBackground: TabBarBackground,
         tabBarStyle: Platform.select({
           ios: {
