@@ -4,7 +4,7 @@ import { useWindowDimensions } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "../ThemedText";
-import { VStack } from "./VStack";
+import { ThemedView } from "../ThemedView";
 
 interface ContactCardProps {
   card: Card;
@@ -33,7 +33,7 @@ export const ContactCard = ({ card }: ContactCardProps) => {
     : null;
 
   return (
-    <VStack
+    <ThemedView
       style={{
         borderWidth: 2,
         borderRadius: 12,
@@ -42,19 +42,30 @@ export const ContactCard = ({ card }: ContactCardProps) => {
         paddingTop: 50,
         alignItems: "center",
       }}
+      bordered
     >
       {fullImageUrl && (
-        <Image
-          source={{ uri: fullImageUrl }}
+        <ThemedView
+          bordered
           style={{
-            borderRadius: 100,
-            borderWidth: 2,
             height: 200,
-            marginBottom: 10,
             width: 200,
+            borderRadius: 100,
+            overflow: "hidden",
+            borderWidth: 2,
           }}
-        />
+        >
+          <Image
+            source={{ uri: fullImageUrl }}
+            style={{
+              height: "100%",
+              width: "100%",
+            }}
+            contentFit="cover"
+          />
+        </ThemedView>
       )}
+
       <ThemedText type="title">{`${firstName} ${lastName}`}</ThemedText>
       {role && <ThemedText>{role}</ThemedText>}
       {company && <ThemedText>{company}</ThemedText>}
@@ -68,6 +79,6 @@ export const ContactCard = ({ card }: ContactCardProps) => {
       {email && <ThemedText>{email}</ThemedText>}
       {phone && <ThemedText>{phone}</ThemedText>}
       {website && <ThemedText>{website}</ThemedText>}
-    </VStack>
+    </ThemedView>
   );
 };

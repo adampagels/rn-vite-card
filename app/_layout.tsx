@@ -1,4 +1,5 @@
 import { HapticsProvider } from "@/contexts/HapticsContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
 import { ActivityIndicator, View } from "react-native";
@@ -33,9 +34,11 @@ export default function RootLayout() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <HapticsProvider>
-        <NavigationLayout />
-      </HapticsProvider>
+      <ThemeProvider>
+        <HapticsProvider>
+          <NavigationLayout />
+        </HapticsProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

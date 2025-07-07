@@ -1,7 +1,7 @@
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { useHaptics } from "@/contexts/HapticsContext";
-import { useState } from "react";
+import { ThemeMode, useTheme } from "@/contexts/ThemeContext";
 import { StyleSheet, Switch, TouchableOpacity, View } from "react-native";
 
 type SettingItemType = {
@@ -12,11 +12,40 @@ type SettingItemType = {
 };
 
 export default function SettingsScreen() {
-  const [isDarkTheme, setIsDarkTheme] = useState(false);
   const { hapticsEnabled, toggleHaptics } = useHaptics();
+  const { themeMode, setThemeMode } = useTheme();
 
-  const toggleTheme = () => {
-    setIsDarkTheme(!isDarkTheme);
+  const getThemeDisplayName = (mode: ThemeMode): string => {
+    switch (mode) {
+      case "light":
+        return "Light";
+      case "dark":
+        return "Dark";
+      case "system":
+        return "System";
+      default:
+        return "System";
+    }
+  };
+
+  const getThemeSubtitle = (mode: ThemeMode): string => {
+    switch (mode) {
+      case "light":
+        return "Always use light theme";
+      case "dark":
+        return "Always use dark theme";
+      case "system":
+        return "Follow system appearance";
+      default:
+        return "Follow system appearance";
+    }
+  };
+
+  const cycleTheme = () => {
+    const modes: ThemeMode[] = ["system", "light", "dark"];
+    const currentIndex = modes.indexOf(themeMode);
+    const nextIndex = (currentIndex + 1) % modes.length;
+    setThemeMode(modes[nextIndex]);
   };
 
   const SettingItem = ({
@@ -25,14 +54,16 @@ export default function SettingsScreen() {
     onPress,
     rightComponent,
   }: SettingItemType) => (
-    <TouchableOpacity style={styles.settingItem} onPress={onPress}>
-      <View style={styles.settingContent}>
-        <ThemedText style={styles.settingTitle}>{title}</ThemedText>
-        {subtitle && (
-          <ThemedText style={styles.settingSubtitle}>{subtitle}</ThemedText>
-        )}
-      </View>
-      {rightComponent}
+    <TouchableOpacity onPress={onPress}>
+      <ThemedView style={styles.settingItem} bordered>
+        <View style={styles.settingContent}>
+          <ThemedText style={styles.settingTitle}>{title}</ThemedText>
+          {subtitle && (
+            <ThemedText style={styles.settingSubtitle}>{subtitle}</ThemedText>
+          )}
+        </View>
+        {rightComponent}
+      </ThemedView>
     </TouchableOpacity>
   );
 
@@ -44,16 +75,15 @@ export default function SettingsScreen() {
         <ThemedText style={styles.groupTitle}>Appearance</ThemedText>
 
         <SettingItem
-          title="Dark Theme"
-          subtitle="Switch between light and dark themes"
-          onPress={toggleTheme}
+          title="Theme"
+          subtitle={getThemeSubtitle(themeMode)}
+          onPress={cycleTheme}
           rightComponent={
-            <Switch
-              value={isDarkTheme}
-              onValueChange={toggleTheme}
-              trackColor={{ false: "#767577", true: "#81b0ff" }}
-              thumbColor={isDarkTheme ? "#f5dd4b" : "#f4f3f4"}
-            />
+            <View style={styles.themeIndicator}>
+              <ThemedText style={styles.themeText}>
+                {getThemeDisplayName(themeMode)}
+              </ThemedText>
+            </View>
           }
         />
       </View>
@@ -108,7 +138,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.05)",
     borderRadius: 12,
     marginBottom: 8,
-    borderWidth: 1,
   },
   settingContent: {
     flex: 1,
@@ -121,5 +150,15 @@ const styles = StyleSheet.create({
   settingSubtitle: {
     fontSize: 14,
     opacity: 0.6,
+  },
+  themeIndicator: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    backgroundColor: "rgba(0, 0, 0, 0.1)",
+  },
+  themeText: {
+    fontSize: 14,
+    fontWeight: "500",
   },
 });

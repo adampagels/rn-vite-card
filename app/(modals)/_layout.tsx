@@ -63,7 +63,7 @@ export default function ModalLayout() {
         <Stack.Screen
           name="settings"
           options={{
-            title: "Settings",
+            title: "",
             presentation: "fullScreenModal",
             headerLeft: () => (
               <TouchableOpacity onPress={() => router.back()}>

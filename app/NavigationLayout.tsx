@@ -1,10 +1,10 @@
+import { ThemedStatusBar } from "@/components/ThemedStatusBar";
 import {
   DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
-import { StatusBar } from "expo-status-bar";
 import "react-native-reanimated";
 
 import { AuthProvider } from "@/contexts/AuthContext";
@@ -24,7 +24,7 @@ export default function NavigationLayout() {
           />
           <Stack.Screen name="+not-found" />
         </Stack>
-        <StatusBar style="auto" />
+        <ThemedStatusBar />
       </ThemeProvider>
     </AuthProvider>
   );

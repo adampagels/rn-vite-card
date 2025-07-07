@@ -1,3 +1,5 @@
+import { ThemedText } from "@/components/ThemedText";
+import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedView } from "@/components/ThemedView";
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import * as ImagePicker from "expo-image-picker";
@@ -8,7 +10,6 @@ import {
   KeyboardTypeOptions,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
 } from "react-native";
 import { CardFormData } from "./useCardForm";
@@ -91,8 +92,8 @@ function renderField(
 ) {
   return (
     <>
-      <Text style={styles.label}>{label}</Text>
-      <TextInput
+      <ThemedText style={styles.label}>{label}</ThemedText>
+      <ThemedTextInput
         placeholder={`Enter ${label.toLowerCase()}`}
         onChangeText={(text) => setValue(field, text)}
         style={[styles.input, error && styles.inputError]}
@@ -117,10 +118,8 @@ const styles = StyleSheet.create({
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
     marginBottom: 4,
     padding: 12,
-    borderRadius: 8,
     fontSize: 16,
   },
   inputError: {
