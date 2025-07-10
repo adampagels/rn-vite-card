@@ -1,10 +1,11 @@
-import { FlatList, StyleSheet } from "react-native";
+import { FlatList, StyleSheet, Text } from "react-native";
 
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Button } from "@/components/common/Button";
 import { ContactCard } from "@/components/common/ContactCard";
+import { NeubrutalButton } from "@/components/common/NeubrutalButton";
 import { VStack } from "@/components/common/VStack";
+import { Colors } from "@/constants/Colors";
 import { useAuth } from "@/contexts/AuthContext";
 import { useFetchCards } from "@/hooks/useCard";
 import { router } from "expo-router";
@@ -34,11 +35,24 @@ export default function HomeScreen() {
       <ThemedView style={styles.container}>
         <VStack spacing={10} style={{ alignItems: "center" }}>
           <ThemedText>No cards available</ThemedText>
-          <Button
-            title="Get started"
-            variant="primary"
+          <NeubrutalButton
+            backgroundColor={Colors.dark.tertiary}
+            borderColor={Colors.light.border}
             onPress={() => router.push("/(modals)/card-form")}
-          />
+          >
+            {
+              <Text
+                style={{
+                  paddingHorizontal: 20,
+                  paddingVertical: 16,
+                  fontWeight: "500",
+                  fontSize: 16,
+                }}
+              >
+                Get started
+              </Text>
+            }
+          </NeubrutalButton>
         </VStack>
       </ThemedView>
     );
@@ -52,10 +66,9 @@ export default function HomeScreen() {
         keyExtractor={(item, index) => item.id || index.toString()}
         horizontal
         showsHorizontalScrollIndicator={false}
-        scrollEnabled
         snapToAlignment="center"
         contentContainerStyle={styles.flatListContent}
-        style={{ flex: 1 }}
+        style={{ flexGrow: 0 }}
       />
     </ThemedView>
   );
@@ -63,14 +76,12 @@ export default function HomeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems: "center",
     flex: 1,
-    justifyContent: "center",
   },
   flatListContent: {
-    flexGrow: 1,
     justifyContent: "center",
+    alignItems: "center",
     gap: 20,
-    padding: 20,
+    margin: 20,
   },
 });

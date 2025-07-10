@@ -5,10 +5,14 @@ import { FormProvider } from "react-hook-form";
 import useCardForm from "./useCardForm";
 
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { Colors } from "@/constants/Colors";
 import { useUploadCardWithImage } from "@/hooks/useCard";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { TouchableOpacity } from "react-native";
 
 export default function ModalLayout() {
+  const colorScheme = useColorScheme();
+
   const form = useCardForm();
   const { user } = useAuth();
   const {
@@ -67,7 +71,10 @@ export default function ModalLayout() {
             presentation: "fullScreenModal",
             headerLeft: () => (
               <TouchableOpacity onPress={() => router.back()}>
-                <IconSymbol name="xmark" color={"blue"} />
+                <IconSymbol
+                  name="xmark"
+                  color={Colors[colorScheme ?? "light"].tertiary}
+                />
               </TouchableOpacity>
             ),
           }}

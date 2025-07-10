@@ -1,39 +1,50 @@
 import { router, Tabs } from "expo-router";
 import React from "react";
-import { Platform, TouchableOpacity } from "react-native";
+import { TouchableOpacity } from "react-native";
 
 import { HStack } from "@/components/common/HStack";
-import { Tab } from "@/components/Tab";
 import { IconSymbol } from "@/components/ui/IconSymbol";
-import TabBarBackground from "@/components/ui/TabBarBackground";
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
-
-const SettingsButton = () => {
-  return (
-    <TouchableOpacity onPress={() => router.push("/(modals)/settings")}>
-      <IconSymbol name="gearshape.fill" color={"blue"} />
-    </TouchableOpacity>
-  );
-};
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
 
+  const SettingsButton = () => {
+    return (
+      <TouchableOpacity onPress={() => router.push("/(modals)/settings")}>
+        <IconSymbol
+          name="gearshape.fill"
+          color={Colors[colorScheme ?? "light"].tertiary}
+          style={{ marginHorizontal: 16 }}
+        />
+      </TouchableOpacity>
+    );
+  };
+
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: true,
-        tabBarButton: Tab,
-        tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: "absolute",
-          },
-          default: {},
-        }),
+        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tertiary,
+        tabBarStyle: {
+          alignContent: "center",
+          alignItems: "center",
+          position: "absolute",
+          bottom: 10,
+          height: 70,
+          borderWidth: 2,
+          borderTopWidth: 2,
+          borderRadius: 50,
+          borderColor: Colors[colorScheme ?? "light"].primary,
+          marginBottom: 20,
+          marginHorizontal: 20,
+        },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: "bold",
+          // marginBottom: 10,
+          alignSelf: "center",
+        },
       }}
     >
       <Tabs.Screen
@@ -54,12 +65,19 @@ export default function TabLayout() {
                 <TouchableOpacity
                   onPress={() => router.push("/(modals)/card-form")}
                 >
-                  <IconSymbol name="plus" color={"blue"} />
+                  <IconSymbol
+                    name="plus"
+                    color={Colors[colorScheme ?? "light"].tertiary}
+                  />
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => router.push("/(modals)/card-form")}
                 >
-                  <IconSymbol name="pencil" color={"blue"} />
+                  <IconSymbol
+                    name="pencil"
+                    color={Colors[colorScheme ?? "light"].tertiary}
+                    style={{ marginRight: 16 }}
+                  />
                 </TouchableOpacity>
               </HStack>
             );

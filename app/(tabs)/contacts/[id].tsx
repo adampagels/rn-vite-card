@@ -1,6 +1,7 @@
 import { ContactCard } from "@/components/common/ContactCard";
+import { ThemedView } from "@/components/ThemedView";
 import { useContacts } from "@/contexts/ContactsContext";
-import { Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 
 export default function ContactDetails() {
   const { selectedContact } = useContacts();
@@ -14,8 +15,15 @@ export default function ContactDetails() {
   }
 
   return (
-    <View>
+    <ThemedView style={styles.container}>
       <ContactCard card={selectedContact.cards} />
-    </View>
+    </ThemedView>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: 20,
+  },
+});

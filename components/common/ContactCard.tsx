@@ -1,10 +1,15 @@
+import { Colors } from "@/constants/Colors";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { Card } from "@/types/card";
 import { Image } from "expo-image";
-import { useWindowDimensions } from "react-native";
+import { Linking, useWindowDimensions } from "react-native";
 import QRCode from "react-native-qrcode-svg";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { ThemedText } from "../ThemedText";
 import { ThemedView } from "../ThemedView";
+import { IconSymbol } from "../ui/IconSymbol";
+import { HStack } from "./HStack";
+import { NeubrutalButton } from "./NeubrutalButton";
 
 interface ContactCardProps {
   card: Card;
@@ -25,6 +30,7 @@ export const ContactCard = ({ card }: ContactCardProps) => {
 
   const insets = useSafeAreaInsets();
   const { height, width } = useWindowDimensions();
+  const colorScheme = useColorScheme();
 
   const cardHeight = height - insets.top - insets.bottom - 20 - 120;
 
@@ -37,11 +43,15 @@ export const ContactCard = ({ card }: ContactCardProps) => {
       style={{
         borderWidth: 2,
         borderRadius: 12,
-        width: width - 50,
+        width: width - 45,
         height: cardHeight,
         paddingTop: 50,
         alignItems: "center",
+        display: "flex",
+        alignSelf: "center",
       }}
+      darkColor={"#000"}
+      lightColor={Colors.light.secondary}
       bordered
     >
       {fullImageUrl && (
@@ -76,9 +86,71 @@ export const ContactCard = ({ card }: ContactCardProps) => {
         color="#000000"
         backgroundColor="#FFFFFF"
       />
-      {email && <ThemedText>{email}</ThemedText>}
-      {phone && <ThemedText>{phone}</ThemedText>}
-      {website && <ThemedText>{website}</ThemedText>}
+      <HStack spacing={20} style={{ marginTop: 20 }}>
+        {email && (
+          <NeubrutalButton
+            borderColor={Colors[colorScheme ?? "light"].primary}
+            onPress={() => Linking.openURL(`mailto:${email}`)}
+            buttonStyle={{ padding: 10 }}
+          >
+            <IconSymbol
+              name="envelope"
+              size={40}
+              color={Colors[colorScheme ?? "light"].primary}
+            />
+          </NeubrutalButton>
+        )}
+
+        {phone && (
+          // <ThemedView
+          //   style={{ borderRadius: 20 }}
+          //   darkColor={Colors.light.secondary}
+          //   lightColor={Colors.light.primary}
+          //   bordered
+          // >
+          //   <Pressable
+          //     onPress={() => Linking.openURL(`tel:${phone}`)}
+          //     style={{
+          //       backgroundColor: "#e6ffe6",
+          //       width: 40,
+          //       height: 40,
+          //       borderRadius: 20,
+          //       alignItems: "center",
+          //       justifyContent: "center",
+          //     }}
+          //   >
+          <NeubrutalButton
+            borderColor={Colors[colorScheme ?? "light"].primary}
+            onPress={() => Linking.openURL(`mailto:${email}`)}
+            buttonStyle={{ padding: 10 }}
+          >
+            <IconSymbol
+              name="phone"
+              size={40}
+              color={Colors[colorScheme ?? "light"].primary}
+            />
+          </NeubrutalButton>
+        )}
+
+        {website && (
+          <NeubrutalButton
+            borderColor={Colors[colorScheme ?? "light"].primary}
+            onPress={() => {
+              const url = website.startsWith("http")
+                ? website
+                : `https://${website}`;
+              Linking.openURL(url);
+            }}
+            buttonStyle={{ padding: 10 }}
+          >
+            <IconSymbol
+              name="globe"
+              size={40}
+              color={Colors[colorScheme ?? "light"].primary}
+            />
+          </NeubrutalButton>
+        )}
+      </HStack>
     </ThemedView>
   );
 };

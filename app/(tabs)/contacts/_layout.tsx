@@ -1,7 +1,10 @@
+import { Colors } from "@/constants/Colors";
 import { ContactsProvider } from "@/contexts/ContactsContext";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { Stack } from "expo-router";
 
 export default function ContactsLayout() {
+  const colorScheme = useColorScheme();
   return (
     <ContactsProvider>
       <Stack>
@@ -11,6 +14,7 @@ export default function ContactsLayout() {
           options={{
             title: "",
             headerBackButtonDisplayMode: "minimal",
+            headerTintColor: Colors[colorScheme ?? "light"].tertiary,
           }}
         />
       </Stack>
